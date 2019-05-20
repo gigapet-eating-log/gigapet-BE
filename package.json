@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jtb36688/gigapetserver.git"
+    "url": "git+https://github.com/gigapet-eating-log/gigapet-BE.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jtb36688/gigapetserver/issues"
+    "url": "https://github.com/gigapet-eating-log/gigapet-BE/issues"
   },
-  "homepage": "https://github.com/jtb36688/gigapetserver#readme",
+  "homepage": "https://github.com/gigapet-eating-log/gigapet-BE/#readme",
   "description": ""
 }
