@@ -1,6 +1,7 @@
 require('dotenv').config();
 const cors = require("cors");
 const express = require('express')
+const helmet = require('helmet')
 const authRouter = require("../auth/authRouter.js")
 const gpRouter = require("../gp/gpRouter.js")
 // const configMW = require("./middleware.js")
@@ -8,6 +9,7 @@ const gpRouter = require("../gp/gpRouter.js")
 const server = express();
 
 server.use(express.json());
+server.use(helmet());
 
 server.use(cors({ credentials: true,  origin: true }))
 server.use(function (req, res, next) {
@@ -20,8 +22,11 @@ server.use(function (req, res, next) {
 server.use('/api/users', authRouter);
 server.use('/api/app', gpRouter);
 
-const port = process.env.PORT || 3300;
+server.get("/", (req, res) => {
+  res.send("<h1>Gigapet</h1>");
+});
 
+const port = process.env.PORT || 3300;
 server.listen(port, () => {
   console.log(`\n=== Server listening on port ${port}\n`);
 });
