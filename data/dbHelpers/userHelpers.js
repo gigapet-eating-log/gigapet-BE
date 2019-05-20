@@ -4,8 +4,7 @@ const yup = require("yup");
 let userSchema = yup.object().shape({
   name: yup.string().required(),
   password: yup.string().required(),
-  email: yup.string().email(),
-  role: yup.string().required()
+  email: yup.string().email()
 });
 
 function getAllUsers() {
@@ -38,13 +37,9 @@ async function loginUser(creds) {
 }
 
 //for later if necessary
-function findUserByRole(role) {
-  return db("users").where({ role });
-}
-
 function getUserById(id) {
   return db("users")
-    .select("id", "name", "email", "role")
+    .select("id", "name", "email")
     .where({ id })
     .first();
 }
@@ -70,8 +65,7 @@ async function deleteUser(id) {
 //   .isValid({
 //     name: "jimmy",
 //     password: 24,
-//     email: "t@t.com",
-//     role: "print"
+//     email: "t@t.com"
 //   })
 //   .then(function(valid) {
 //     valid; // => true

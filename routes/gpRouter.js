@@ -1,9 +1,9 @@
 const router = require("express").Router();
 
-const db = require("./gpModule.js");
-const { authenticate } = require("../auth/authMW.js");
+const db = require("../data/dbHelpers/gpHelpers");
+const restricted = require("../middleware/tokenRestricted");
 
-router.post("/getfood", authenticate, (req, res) => {
+router.post("/getfood", restricted, (req, res) => {
   let { parentId, date } = req.body;
   db.getFoods(parentId, date)
     .then(users => {
@@ -14,7 +14,7 @@ router.post("/getfood", authenticate, (req, res) => {
     });
 });
 
-router.post("/childnames", authenticate, (req, res) => {
+router.post("/childnames", restricted, (req, res) => {
   db.getChildren(req.body.parentId)
     .then(found => {
       if (found.length) {
@@ -28,7 +28,7 @@ router.post("/childnames", authenticate, (req, res) => {
     });
 });
 
-router.post("/getstats", authenticate, (req, res) => {
+router.post("/getstats", restricted, (req, res) => {
   let { fullName, dateStart, dateEnd, parentId } = req.body;
   db.findChildId(parentId, fullName)
     .then(found => {
@@ -46,7 +46,7 @@ router.post("/getstats", authenticate, (req, res) => {
 });
 
 
-router.post("/addfood", authenticate, async (req, res) => {
+router.post("/addfood", restricted, async (req, res) => {
   let { fullName, foodName, foodType, date, parentId, mealTime } = req.body;
   db.findChildId(parentId, fullName)
     .then(found => {
@@ -77,7 +77,7 @@ router.post("/addchild", (req, res) => {
 
 //took authenticate off delete because it would always send 401 error even if current auth headers were given
 
-router.post("/deletefood", authenticate, (req, res) => {
+router.post("/deletefood", restricted, (req, res) => {
   let { id, parentId, date } = req.body;
   db.deleteFood(id, parentId, date)
     .then(deleted => {
@@ -88,7 +88,7 @@ router.post("/deletefood", authenticate, (req, res) => {
     });
 });
 
-router.put("/updatefood", authenticate, (req, res) => {
+router.put("/updatefood", restricted, (req, res) => {
   let { id, parentId, fullName, foodName, foodType, date, mealTime } = req.body;
   db.findChildId(parentId, fullName)
     .then(found => {

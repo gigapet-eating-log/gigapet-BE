@@ -2,14 +2,12 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const authMW = require("./authMW.js");
 const restricted = require("../middleware/tokenRestricted");
 const emailCheck = require("../middleware/emailCheck");
-const db = require("../gp/gpModule.js");
 
 const userHelpers = require("../data/dbHelpers/userHelpers.js");
 
-router.post("/api/users/register", emailCheck, async (req, res) => {
+router.post("/register", emailCheck, async (req, res) => {
   const creds = req.body;
   const hash = bcrypt.hashSync(creds.password, 12);
   creds.password = hash;
@@ -46,7 +44,6 @@ router.post("/api/users/register", emailCheck, async (req, res) => {
  *  name: {string} unique  - require
  *  password: {string}  - require
  *  email: {string} unique  - require
- *  role: {string}   - optional for now
  * }
  *
  */
@@ -56,7 +53,6 @@ function makeTokenFromUser(user) {
   const payload = {
     subject: user.id,
     username: user.username,
-    role: user.role,
     email: user.email
   };
   const secret = process.env.SECRET || "secret text - came from .env";
@@ -69,7 +65,7 @@ function makeTokenFromUser(user) {
   return token;
 }
 
-router.post("/api/users/login", (req, res) => {
+router.post("/login", (req, res) => {
   let { name, password } = req.body;
 
   if (name && password) {
@@ -82,7 +78,6 @@ router.post("/api/users/login", (req, res) => {
           res.status(200).json({
             message: `Welcome ${user.name}!`,
             token: token,
-            role: user.role,
             id: user.id
           });
         } else {
@@ -97,7 +92,7 @@ router.post("/api/users/login", (req, res) => {
   }
 });
 
-router.get("/api/users", restricted, async (req, res) => {
+router.get("/", restricted, async (req, res) => {
   try {
     const users = await userHelpers.getAllUsers();
     res.status(200).json({
@@ -120,12 +115,10 @@ router.get("/api/users", restricted, async (req, res) => {
             "name": "Mia",
             "email": "mia@yahoo.com",
             "password": "$2a$12$kFQU7QYCQrq.SA5Wk7JUAOPVjERLaBY44kkEMh/1qHE9yos1nYrLW",
-            "role": "manager"
         }
     ],
     "decoded": {
         "subject": 14,
-        "role": "manager",
         "email": "mia@yahoo.com",
         "iat": 1555164970,
         "exp": 1555236970
@@ -134,7 +127,7 @@ router.get("/api/users", restricted, async (req, res) => {
  *
  */
 
-router.get("/api/users/:id", restricted, async (req, res) => {
+router.get("/:id", restricted, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -157,11 +150,10 @@ router.get("/api/users/:id", restricted, async (req, res) => {
     "name": "Mia",
     "email": "mia@yahoo.com",
     "password": "$2a$12$0orwA4XSCWlVZsH7.8HTO.blezw1IGMZv.cO9B5bvlDWYntORbqma",
-    "role": "manager"
 }
  */
 
-router.put("/api/users/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const user = req.body;
 
@@ -185,7 +177,7 @@ router.put("/api/users/:id", async (req, res) => {
  * Udate User
  */
 
-router.delete("/api/users/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
