@@ -3,7 +3,7 @@ const router = require("express").Router();
 const db = require("../data/dbHelpers/gpHelpers");
 const restricted = require("../middleware/tokenRestricted");
 
-router.post("/getfood", restricted, (req, res) => {
+router.get("/getfood", restricted, (req, res) => {
   let { parentId, date } = req.body;
   db.getFoods(parentId, date)
     .then(users => {
@@ -14,13 +14,13 @@ router.post("/getfood", restricted, (req, res) => {
     });
 });
 
-router.post("/childnames", restricted, (req, res) => {
+router.get("/childnames", restricted, (req, res) => {
   db.getChildren(req.body.parentId)
     .then(found => {
       if (found.length) {
         res.status(200).json(found);
       } else {
-        res.send({ fullName: "No children found for parent" });
+        res.send({ name: "No children found for parent" });
       }
     })
     .catch(({ code, message }) => {
@@ -28,9 +28,9 @@ router.post("/childnames", restricted, (req, res) => {
     });
 });
 
-router.post("/getstats", restricted, (req, res) => {
-  let { fullName, dateStart, dateEnd, parentId } = req.body;
-  db.findChildId(parentId, fullName)
+router.get("/getstats", restricted, (req, res) => {
+  let { name, dateStart, dateEnd, parentId } = req.body;
+  db.findChildId(parentId, name)
     .then(found => {
       db.getFoodStats(found.id, dateStart, dateEnd)
         .then(added => {
@@ -47,8 +47,8 @@ router.post("/getstats", restricted, (req, res) => {
 
 
 router.post("/addfood", restricted, async (req, res) => {
-  let { fullName, foodName, foodType, date, parentId, mealTime } = req.body;
-  db.findChildId(parentId, fullName)
+  let { name, foodName, foodType, date, parentId, mealTime } = req.body;
+  db.findChildId(parentId, name)
     .then(found => {
       db.addFood(found.id, foodType, foodName, date, mealTime)
         .then(added => {
@@ -64,8 +64,8 @@ router.post("/addfood", restricted, async (req, res) => {
 });
 
 router.post("/addchild", (req, res) => {
-  let { parentId, fullName } = req.body;
-  let addition = { parentId, fullName };
+  let { parentId, name } = req.body;
+  let addition = { parentId, name };
   db.addChild(addition)
     .then(add => {
       res.status(201).json(add);
@@ -75,9 +75,7 @@ router.post("/addchild", (req, res) => {
     });
 });
 
-//took authenticate off delete because it would always send 401 error even if current auth headers were given
-
-router.post("/deletefood", restricted, (req, res) => {
+router.delete("/deletefood", restricted, (req, res) => {
   let { id, parentId, date } = req.body;
   db.deleteFood(id, parentId, date)
     .then(deleted => {
@@ -89,8 +87,8 @@ router.post("/deletefood", restricted, (req, res) => {
 });
 
 router.put("/updatefood", restricted, (req, res) => {
-  let { id, parentId, fullName, foodName, foodType, date, mealTime } = req.body;
-  db.findChildId(parentId, fullName)
+  let { id, parentId, name, foodName, foodType, date, mealTime } = req.body;
+  db.findChildId(parentId, name)
     .then(found => {
       db.updateFood(id, found.id, foodType, foodName, date, mealTime, parentId)
         .then(added => {

@@ -32,19 +32,19 @@ async function add(user) {
 
 async function addChild(request) {
   const [id] = await db("children").insert(request);
-  return findById("children", id).select("fullName");
+  return findById("children", id).select("name");
 }
 
 function getChildren(parentId) {
   return db("children")
-    .select("fullName")
+    .select("name")
     .where("parentId", parentId);
 }
 
 function getFoods(parentId, date) {
   return db("food")
     .select(
-      "children.fullName",
+      "children.name",
       "food.id",
       "food.foodName",
       "food.date",
@@ -56,7 +56,7 @@ function getFoods(parentId, date) {
     .join("children", "children.id", "=", "food.childId");
 }
 
-function addFood(parentId, fullName) {
+function addFood(parentId, name) {
   return db("children_food");
 }
 
@@ -64,9 +64,9 @@ function findFood(foodName) {
   return db("food").where("foodName", foodName);
 }
 
-function findChildId(parentId, fullName) {
+function findChildId(parentId,name) {
   return db("children")
-    .where("fullName", fullName)
+    .where("name", name)
     .andWhere("parentId", parentId)
     .first();
 }
@@ -80,7 +80,7 @@ function findById(table, id) {
 function findFoodById(id) {
   return db("food")
     .select(
-      "children.fullName",
+      "children.name",
       "food.foodName",
       "food.mealTime",
       "food.foodType",
@@ -108,7 +108,7 @@ async function deleteFood(id, parentId, date) {
     .del();
   return db("food")
     .select(
-      "children.fullName",
+      "children.name",
       "food.foodName",
       "food.mealTime",
       "food.foodType",
@@ -139,7 +139,7 @@ async function updateFood(
     });
   return db("food")
     .select(
-      "children.fullName",
+      "children.name",
       "food.foodName",
       "food.mealTime",
       "food.foodType",

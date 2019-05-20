@@ -19,7 +19,7 @@
     "stripe": "^7.0.0",
     "yup": "^0.27.0"
   },
-  "name": "gigapetserver",
+  "name": "gigapet",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
