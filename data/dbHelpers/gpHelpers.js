@@ -37,7 +37,6 @@ async function addChild(request) {
 
 function getChildren(parentId) {
   return db("children")
-    .select("name")
     .where("parentId", parentId);
 }
 

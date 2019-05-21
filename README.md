@@ -244,16 +244,57 @@ URL: /api/app/addchild
 
 ```
 {
-    "parentId":"2"
-    "name":"Billy"   
+    "parentId":"2",
+    "name":"Billy",
+    "calorieGoal":"20000"
 }
 
 ```
 
-## GET ALL Children
+## GET ALL Children for Parent
 
 URL: /api/app/childnames
 
+`parentId` is required
+
+```
+{
+    "parentId":"2"
+}
+
+```
+
+If gotten succesfully, will return a object with message:
+
+```
+
+{
+    "id": "1",
+    "name": "Billy",
+    "calorieGoal": "20000",
+    parentId":"2"
+}
+
+```
+
 ## ADD (POST) Food
+
+URL: /api/app/addfood
+
+Form will require `foodName` to add new food.
+Example data:
+
+```
+{
+    "foodName":"Carrot",
+    "foodType":"Vegetable",
+    "calories":"41",
+    "mealTime":"Snack",
+    "date":"2019/05/21",
+    "childId":"2"
+}
+
+```
+
 
 ---
