@@ -90,7 +90,7 @@ a **GET** request to _/api/users_ will return all the users existing in database
 URL: /api/users/
 
 This route is restricted - a authorization header with the token its required
-The respone will include the decoded token contains the id,email and role of the current user
+The response will include the decoded token contains the id,email and role of the current user
 
 If Successful, response should be 200 (OK). If unsuccessful, response should be 500. Example users data:
 
@@ -281,17 +281,19 @@ If gotten succesfully, will return a object with message:
 
 URL: /api/app/addfood
 
-Form will require `foodName` to add new food.
+Form will require `name`, `foodName`, `foodType`, `date`, `parentId`, `mealTime`, and `calories` to add new food.
 Example data:
 
 ```
 {
-    "foodName":"Carrot",
-    "foodType":"Vegetable",
-    "calories":"41",
-    "mealTime":"Snack",
-    "date":"2019/05/21",
-    "childId":"2"
+	"name":"Billy",
+	"mealTime":"Lunch",
+	"foodType":"Vegetable",
+	"foodName":"Carrot",
+	"parentId":"9",
+	"calories":"41",
+	"date":"2019-01-01",
+	"childId":"2"
 }
 
 ```
