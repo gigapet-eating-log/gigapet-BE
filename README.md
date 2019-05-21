@@ -281,7 +281,7 @@ If gotten succesfully, will return a object with message:
 
 URL: /api/app/addfood
 
-Form will require `name`, `foodName`, `foodType`, `date`, `parentId`, `mealTime`, and `calories` to add new food.
+Form will require `name`, `foodName`, `foodType`, `date`, `parentId`, `mealTime`, `childId` and `calories` to add new food.
 Example data:
 
 ```
@@ -302,10 +302,18 @@ Example data:
 
 URL: /api/app/getfood
 
+Form will require `parentId`, `date`, and `childId` to add new food.
+Example data:
+
+```
 {
 	"parentId":"9",
 	"date":"2019-01-01",
 	"childId":"2"
 }
+
+```
+
+
 
 ---
