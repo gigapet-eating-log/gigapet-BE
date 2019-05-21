@@ -47,10 +47,10 @@ router.get("/getstats", restricted, (req, res) => {
 
 
 router.post("/addfood", restricted, async (req, res) => {
-  let { name, foodName, foodType, date, parentId, mealTime } = req.body;
+  let { name, foodName, foodType, date, parentId, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
-      db.addFood(found.id, foodType, foodName, date, mealTime)
+      db.addFood(found.id, foodType, foodName, date, mealTime, calories)
         .then(added => {
           res.status(201).json(added);
         })
@@ -64,8 +64,8 @@ router.post("/addfood", restricted, async (req, res) => {
 });
 
 router.post("/addchild", (req, res) => {
-  let { parentId, name } = req.body;
-  let addition = { parentId, name };
+  let { parentId, name, calorieGoal } = req.body;
+  let addition = { parentId, name, calorieGoal };
   db.addChild(addition)
     .then(add => {
       res.status(201).json(add);
@@ -87,10 +87,10 @@ router.delete("/deletefood", restricted, (req, res) => {
 });
 
 router.put("/updatefood", restricted, (req, res) => {
-  let { id, parentId, name, foodName, foodType, date, mealTime } = req.body;
+  let { id, parentId, name, foodName, foodType, date, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
-      db.updateFood(id, found.id, foodType, foodName, date, mealTime, parentId)
+      db.updateFood(id, found.id, foodType, foodName, date, mealTime, parentId, calories)
         .then(added => {
           res.status(201).json(added);
         })

@@ -23,7 +23,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node api/server.js",
     "test": "cross-env DB_ENV=testing jest --watch --verbose",
     "server": "nodemon"
   },

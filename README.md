@@ -238,4 +238,22 @@ If user with specified ID doesn't exist in database will response with 404 and a
 }
 ```
 
+## ADD (POST) New Child
+
+URL: /api/app/addchild
+
+```
+{
+    "parentId":"2"
+    "name":"Billy"   
+}
+
+```
+
+## GET ALL Children
+
+URL: /api/app/childnames
+
+## ADD (POST) Food
+
 ---

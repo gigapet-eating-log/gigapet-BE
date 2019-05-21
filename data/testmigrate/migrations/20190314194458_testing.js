@@ -2,7 +2,7 @@ exports.up = function(knex, Promise) {
     return knex.schema
       .createTable("users", column => {
         column.increments();
-        column.string("fullName", 100);
+        column.string("name", 100);
         column.string("email", 100);
         column
           .string("username", 32)
@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       })
       .createTable("children", column => {
         column.increments();
-        column.string("fullName", 100).notNullable();
+        column.string("name", 100).notNullable();
         column
           .integer("parentId")
           .unsigned()
