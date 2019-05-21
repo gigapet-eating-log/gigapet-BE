@@ -59,7 +59,7 @@ a **POST** request to _/api/users/login_ will return an object
 
 URL: /api/users/login
 
-Form will need `username` and `password`. If posted correctly, should get a response of:
+Form will need `name` and `password`. If posted correctly, should get a response of:
 
 ```
 
@@ -298,7 +298,7 @@ Example data:
 
 ```
 
-## Get Food for Date
+## GET Food for Date
 
 URL: /api/app/getfood
 
@@ -314,6 +314,58 @@ Example data:
 
 ```
 
+## UPDATE (PUT) Food
 
+URL: /api/app/updatefood
+
+Form will require `name`,`mealTime`, `foodType`, `foodName`, `parentId`, `calories`, `date`, and `id` to add new food.
+Example data:
+
+```
+{
+	"name":"Billy",
+	"mealTime":"Lunch",
+	"foodType":"meat",
+	"foodName":"bacon",
+	"parentId":"9",
+	"calories":"41",
+	"date":"2019-01-01",
+	"id":"1"
+}
+
+```
+
+## DELETE Food
+
+URL: /api/app/deletefood
+
+Form will require `parentId`, `date`, and `id` to delete food.
+Example data:
+
+```
+{
+	"parentId":"9",
+	"date":"2019-01-01",
+	"id":"1"
+}
+
+```
+
+## GET Food Stats
+
+URL: /api/app/deletefood
+
+Form will require `name`, `parentID`, `dateStart` and `dateEnd` to delete food.
+Example data:
+
+```
+{
+	"name":"Billy",
+	"parentId":"9",
+	"dateStart":"2019-01-01",
+	"dateEnd":"2019-01-03"
+}
+
+```
 
 ---

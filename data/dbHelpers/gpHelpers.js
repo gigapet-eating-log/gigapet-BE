@@ -125,6 +125,7 @@ async function updateFood(
   foodName,
   date,
   mealTime,
+  calories,
   parentId
 ) {
   await db("food")
@@ -134,7 +135,8 @@ async function updateFood(
       foodType: foodType,
       foodName: foodName,
       date: date,
-      mealTime: mealTime
+      mealTime: mealTime,
+      calories: calories
     });
   return db("food")
     .select(
@@ -142,6 +144,7 @@ async function updateFood(
       "food.foodName",
       "food.mealTime",
       "food.foodType",
+      "food.calories",
       "food.id"
     )
     .where("parentId", parentId)
