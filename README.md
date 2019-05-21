@@ -90,7 +90,7 @@ a **GET** request to _/api/users_ will return all the users existing in database
 URL: /api/users/
 
 This route is restricted - a authorization header with the token its required
-The respone will include the decoded token contains the id,email and role of the current user
+The response will include the decoded token contains the id,email and role of the current user
 
 If Successful, response should be 200 (OK). If unsuccessful, response should be 500. Example users data:
 
@@ -244,16 +244,76 @@ URL: /api/app/addchild
 
 ```
 {
-    "parentId":"2"
-    "name":"Billy"   
+    "parentId":"2",
+    "name":"Billy",
+    "calorieGoal":"20000"
 }
 
 ```
 
-## GET ALL Children
+## GET ALL Children for Parent
 
 URL: /api/app/childnames
 
+`parentId` is required
+
+```
+{
+    "parentId":"2"
+}
+
+```
+
+If gotten succesfully, will return a object with message:
+
+```
+
+{
+    "id": "1",
+    "name": "Billy",
+    "calorieGoal": "20000",
+    parentId":"2"
+}
+
+```
+
 ## ADD (POST) Food
+
+URL: /api/app/addfood
+
+Form will require `name`, `foodName`, `foodType`, `date`, `parentId`, `mealTime`, `childId` and `calories` to add new food.
+Example data:
+
+```
+{
+	"name":"Billy",
+	"mealTime":"Lunch",
+	"foodType":"Vegetable",
+	"foodName":"Carrot",
+	"parentId":"9",
+	"calories":"41",
+	"date":"2019-01-01",
+	"childId":"2"
+}
+
+```
+
+## Get Food for Date
+
+URL: /api/app/getfood
+
+Form will require `parentId`, `date`, and `childId` to add new food.
+Example data:
+
+```
+{
+	"parentId":"9",
+	"date":"2019-01-01",
+	"childId":"2"
+}
+
+```
+
+
 
 ---
