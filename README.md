@@ -298,5 +298,14 @@ Example data:
 
 ```
 
+## Get Food for Date
+
+URL: /api/app/getfood
+
+{
+	"parentId":"9",
+	"date":"2019-01-01",
+	"childId":"2"
+}
 
 ---
