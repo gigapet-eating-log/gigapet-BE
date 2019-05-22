@@ -253,16 +253,9 @@ URL: /api/app/addchild
 
 ## GET ALL Children for Parent
 
-URL: /api/app/childnames
+URL: /api/app/childname/:id
 
-`parentId` is required
-
-```
-{
-    "parentId":"2"
-}
-
-```
+`id` will be `parentId`
 
 If gotten succesfully, will return a object with message:
 
@@ -272,7 +265,6 @@ If gotten succesfully, will return a object with message:
     "id": "1",
     "name": "Billy",
     "calorieGoal": "20000",
-    parentId":"2"
 }
 
 ```
