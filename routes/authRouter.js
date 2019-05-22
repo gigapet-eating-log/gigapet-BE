@@ -153,7 +153,7 @@ router.get("/:id", restricted, async (req, res) => {
 }
  */
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", restricted, async (req, res) => {
   const { id } = req.params;
   const user = req.body;
 
@@ -177,7 +177,7 @@ router.put("/:id", async (req, res) => {
  * Udate User
  */
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", restricted, async (req, res) => {
   const { id } = req.params;
 
   try {
