@@ -292,17 +292,19 @@ Example data:
 
 ## GET Food for Date
 
-URL: /api/app/getfood
+URL: /api/app/getfood/:id
 
-Form will require `parentId`, `date`, and `childId` to add new food.
-Example data:
+`id` will be `childId`
+Example return data:
 
 ```
 {
-	"parentId":"9",
-	"date":"2019-01-01",
-	"childId":"2"
-}
+    "id": 2,
+    "foodName": "Carrot",
+    "date": "2019-01-01",
+    "mealTime": "Lunch",
+    "foodType": "Vegetable"
+},
 
 ```
 

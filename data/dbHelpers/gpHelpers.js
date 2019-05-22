@@ -45,19 +45,16 @@ function getChildren(id) {
     .where({"children.parentId": id});
 }
 
-function getFoods(parentId, date) {
+function getFoods(id) {
   return db("food")
     .select(
-      "children.name",
       "food.id",
       "food.foodName",
       "food.date",
       "food.mealTime",
       "food.foodType"
     )
-    .where("date", date)
-    .andWhere("parentId", parentId)
-    .join("children", "children.id", "=", "food.childId");
+    .where({"food.childId": id})
 }
 
 function addFood(parentId, name) {
