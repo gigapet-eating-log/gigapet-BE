@@ -3,7 +3,7 @@ const router = require("express").Router();
 const db = require("../data/dbHelpers/gpHelpers");
 const restricted = require("../middleware/tokenRestricted");
 
-router.get("/getfood", restricted, (req, res) => {
+router.get("/getfood", (req, res) => {
   let { parentId, date } = req.body;
   db.getFoods(parentId, date)
     .then(users => {
@@ -14,7 +14,7 @@ router.get("/getfood", restricted, (req, res) => {
     });
 });
 
-router.get("/childnames", restricted, (req, res) => {
+router.get("/childnames", (req, res) => {
   db.getChildren(req.body.parentId)
     .then(found => {
       if (found.length) {
@@ -28,7 +28,7 @@ router.get("/childnames", restricted, (req, res) => {
     });
 });
 
-router.get("/getstats", restricted, (req, res) => {
+router.get("/getstats", (req, res) => {
   let { name, dateStart, dateEnd, parentId } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
@@ -46,7 +46,7 @@ router.get("/getstats", restricted, (req, res) => {
 });
 
 
-router.post("/addfood", restricted, async (req, res) => {
+router.post("/addfood", async (req, res) => {
   let { name, foodName, foodType, date, parentId, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
@@ -75,7 +75,7 @@ router.post("/addchild", (req, res) => {
     });
 });
 
-router.delete("/deletefood", restricted, (req, res) => {
+router.delete("/deletefood", (req, res) => {
   let { id, parentId, date } = req.body;
   db.deleteFood(id, parentId, date)
     .then(deleted => {
@@ -86,7 +86,7 @@ router.delete("/deletefood", restricted, (req, res) => {
     });
 });
 
-router.put("/updatefood", restricted, (req, res) => {
+router.put("/updatefood", (req, res) => {
   let { id, parentId, name, foodName, foodType, date, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
