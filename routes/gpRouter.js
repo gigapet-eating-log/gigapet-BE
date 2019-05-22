@@ -14,7 +14,8 @@ router.get("/getfood", (req, res) => {
     });
 });
 
-router.get("/childnames", (req, res) => {
+/*
+router.post("/childnames", (req, res) => {
   db.getChildren(req.body.parentId)
     .then(found => {
       if (found.length) {
@@ -27,6 +28,20 @@ router.get("/childnames", (req, res) => {
       res.status(code).json({ message });
     });
 });
+*/
+//*
+router.get("/childname/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+      const child = await db.getChildren(id);
+      res.status(200).json(child);
+  } catch (error) {
+      res.status(500).json({
+          message: `Problem retrieving child`
+      });
+  }
+});
+//*/
 
 router.get("/getstats", (req, res) => {
   let { name, dateStart, dateEnd, parentId } = req.body;

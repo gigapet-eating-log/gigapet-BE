@@ -35,9 +35,14 @@ async function addChild(request) {
   return findById("children", id).select("name");
 }
 
-function getChildren(parentId) {
+function getChildren(id) {
   return db("children")
-    .where("parentId", parentId);
+    .select(
+      "children.id",
+      "children.name",
+      "children.calorieGoal"
+      )
+    .where({"children.parentId": id});
 }
 
 function getFoods(parentId, date) {
