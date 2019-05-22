@@ -3,7 +3,7 @@ const router = require("express").Router();
 const db = require("../data/dbHelpers/gpHelpers");
 const restricted = require("../middleware/tokenRestricted");
 
-router.get("/getfood/:id", async (req, res) => {
+router.get("/getfood/:id", restricted, async (req, res) => {
   const id = req.params.id;
   try {
     const food = await db.getFoods(id);
@@ -15,7 +15,7 @@ router.get("/getfood/:id", async (req, res) => {
   }
 });
 
-router.get("/childname/:id", async (req, res) => {
+router.get("/childname/:id", restricted, async (req, res) => {
   const id = req.params.id;
   try {
       const child = await db.getChildren(id);
@@ -27,7 +27,7 @@ router.get("/childname/:id", async (req, res) => {
   }
 });
 
-router.post("/addfood", async (req, res) => {
+router.post("/addfood", restricted, async (req, res) => {
   let { name, foodName, foodType, date, parentId, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
@@ -44,7 +44,7 @@ router.post("/addfood", async (req, res) => {
     });
 });
 
-router.post("/addchild", (req, res) => {
+router.post("/addchild", restricted, (req, res) => {
   let { parentId, name, calorieGoal } = req.body;
   let addition = { parentId, name, calorieGoal };
   db.addChild(addition)
@@ -56,7 +56,7 @@ router.post("/addchild", (req, res) => {
     });
 });
 
-router.delete("/deletefood", (req, res) => {
+router.delete("/deletefood", restricted, (req, res) => {
   let { id, parentId, date } = req.body;
   db.deleteFood(id, parentId, date)
     .then(deleted => {
@@ -67,7 +67,7 @@ router.delete("/deletefood", (req, res) => {
     });
 });
 
-router.put("/updatefood", (req, res) => {
+router.put("/updatefood", restricted, (req, res) => {
   let { id, parentId, name, foodName, foodType, date, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
     .then(found => {
