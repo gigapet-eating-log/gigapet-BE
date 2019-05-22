@@ -3,33 +3,18 @@ const router = require("express").Router();
 const db = require("../data/dbHelpers/gpHelpers");
 const restricted = require("../middleware/tokenRestricted");
 
-router.get("/getfood", (req, res) => {
-  let { parentId, date } = req.body;
-  db.getFoods(parentId, date)
-    .then(users => {
-      res.send(users);
-    })
-    .catch(err => {
-      console.log(err);
+router.get("/getfood/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const food = await db.getFoods(id);
+    res.status(200).json(food);
+  } catch (error) {
+    res.status(500).json({
+      message: `Problem retrieving food`
     });
+  }
 });
 
-/*
-router.post("/childnames", (req, res) => {
-  db.getChildren(req.body.parentId)
-    .then(found => {
-      if (found.length) {
-        res.status(200).json(found);
-      } else {
-        res.send({ name: "No children found for parent" });
-      }
-    })
-    .catch(({ code, message }) => {
-      res.status(code).json({ message });
-    });
-});
-*/
-//*
 router.get("/childname/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -41,7 +26,6 @@ router.get("/childname/:id", async (req, res) => {
       });
   }
 });
-//*/
 
 router.get("/getstats", (req, res) => {
   let { name, dateStart, dateEnd, parentId } = req.body;
