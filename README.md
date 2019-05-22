@@ -290,7 +290,7 @@ Example data:
 
 ```
 
-## GET Food for Date
+## GET Food for Child
 
 URL: /api/app/getfood/:id
 
