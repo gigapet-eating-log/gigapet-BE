@@ -5,7 +5,6 @@ module.exports = {
   addChild,
   getChildren,
   addFood,
-  findFood,
   findChildId,
   findUser,
   findAllByFilter,
@@ -52,7 +51,8 @@ function getFoods(id) {
       "food.foodName",
       "food.date",
       "food.mealTime",
-      "food.foodType"
+      "food.foodType",
+      "food.calories"
     )
     .where({"food.childId": id})
 }
@@ -61,9 +61,6 @@ function addFood(parentId, name) {
   return db("children_food");
 }
 
-function findFood(foodName) {
-  return db("food").where("foodName", foodName);
-}
 
 function findChildId(parentId,name) {
   return db("children")
