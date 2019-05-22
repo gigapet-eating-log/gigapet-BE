@@ -345,21 +345,4 @@ Example data:
 
 ```
 
-## GET Food Stats
-
-URL: /api/app/deletefood
-
-Form will require `name`, `parentID`, `dateStart` and `dateEnd` to delete food.
-Example data:
-
-```
-{
-	"name":"Billy",
-	"parentId":"9",
-	"dateStart":"2019-01-01",
-	"dateEnd":"2019-01-03"
-}
-
-```
-
 ---

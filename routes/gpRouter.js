@@ -27,24 +27,6 @@ router.get("/childname/:id", async (req, res) => {
   }
 });
 
-router.get("/getstats", (req, res) => {
-  let { name, dateStart, dateEnd, parentId } = req.body;
-  db.findChildId(parentId, name)
-    .then(found => {
-      db.getFoodStats(found.id, dateStart, dateEnd)
-        .then(added => {
-          res.status(200).json(added);
-        })
-        .catch(({ code, message }) => {
-          res.status(code).json({ message });
-        });
-    })
-    .catch(({ code, message }) => {
-      res.status(code).json({ message });
-    });
-});
-
-
 router.post("/addfood", async (req, res) => {
   let { name, foodName, foodType, date, parentId, mealTime, calories } = req.body;
   db.findChildId(parentId, name)
